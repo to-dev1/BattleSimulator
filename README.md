@@ -5,12 +5,15 @@ A battle simulator with physics, CPU rendering, simple terrain generation, unit 
 Physics
 - units move on the terrain due to the interaction between the unit's collision points and the ground
 - mechs walk using the physics system instead of only a visual animation
+  
 Software renderer
 - simple renderer based on rasterization
 - runs on the CPU
+
 Environment
 - simple terrains built with sine waves
 - different gravity and atmosphere on different planets
+
 Units
 - loaded from a custom text file format
 - AI to handle moving the unit and using its weapons
