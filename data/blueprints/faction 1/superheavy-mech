@@ -1,0 +1,164 @@
+/Heavy mech with various weapons/
+/This file has details on the unit file syntax/
+/These comments are removed when the unit is loaded/
+
+/Unit type identifier/
+MECH
+/Stats/
+/These define how much damage the unit can survive/
+/This mech for example may not take any damage from light weapons, especially at long range due to its heavy armor/
+/It is however a huge target and easy to hit even with artillery/
+/The enemy faction counterpart is even more heavily armored but its weapons have very limited range/
+/The # symbol is used to split the data into blocks/
+/hp|armor|radius|explosion/
+#5500|30|5|5000
+/Hull/
+/This defines the unit's hull shape/
+/The first vector is the forward one when considering the object's rotation Quaternion/
+/vec1x|vec1y|vec1z|vec2x|vec2y|vec2z|r|g|b|x|y|z|a|b|c/
+#1.5|2.0|1|1.7|2.2|1.0|80|80|80|0|0|0|0|0|0
+/Mass/
+/The unit's mass has an effect on some physics calculations/
+#10.0
+/Data specific to this unit type/
+/Walking speed/
+#0.6
+
+/Leg 1/
+/same syntax as hull/
+/The mech leg consists of two parts and two joints/
+/Joint 1/
+/The mech's control system uses the joints to move/
+/In total 8 of these must be defined as is done in this file/
+/The ! symbol is used to split the data after the # symbol/
+!0.5|0.45|0.45|0.5|0.45|0.45|30|30|30|0.97|-2.0|0|1.57|0|0
+/Part 1/
+!0.7|0.7|2.5|0.7|0.7|0.0|80|80|80|0|0|0.3|0|0|0
+/Joint 2/
+!0.5|0.45|0.45|0.5|0.45|0.45|30|30|30|0|0|2.5|0|0|0
+/Part 2/
+!0.7|0.7|2.5|0.7|0.7|0.0|80|80|80|0|0|0.3|0|0|0
+
+/Leg 2/
+!0.5|0.45|0.45|0.5|0.45|0.45|30|30|30|-0.97|-2.0|0|1.57|0|0
+!0.7|0.7|2.5|0.7|0.7|0.0|80|80|80|0|0|0.3|0|0|0
+!0.5|0.45|0.45|0.5|0.45|0.45|30|30|30|0|0|2.5|0|0|0
+!0.7|0.7|2.5|0.7|0.7|0.0|80|80|80|0|0|0.3|0|0|0
+
+/Now that the features unique to this unit type have been specified, various universal objects can be added such as turrets and weapons/
+
+/Light turret on top of the hull/
+/Blocks have the syntax of function and visual identifier pairs, they must always have both separated with a + symbol/
+/There is no specific tag for a block without a function, but STRUCTURE is used here for clarify that these are only structural blocks of the unit/
+#STRUCTURE
+/The visual identifier specifies the type of mesh to be constructed for the object/
+/The identifier EMPTY is used when no mesh is needed, however a position and rotation are still required/
++EMPTY
+!0|1.9|0|0|0|0
+/The arrow symbol tells the loading system to add the following objects as subobjects of the last object/
+/By default they are added to the hull object/
+#->
+#STRUCTURE
+/The BOX identifier is used for the standard mesh, see the Blueprint object for implementation details/
+/First are defined two vectors that are used to construct the shape, then a color, position vector and a rotation/
+/See rotation construction details in the Quaternion object/
++BOX
+!0.4|0.4|0.8|0.75|0.75|0.0|100|100|100|0|0|0|-1.57|0|0
+/Two axis turret/
+/The TURRET tag defines a turret that can rotate around two axes/
+/limit1|limit2|azimuth speed|elevation speed/
+#TURRET
+!-3.0|1.0|0.5|0.8
+/This specifies how many times the container object of the current container should be selected to define the azimuth object/
+/In this case the azimuth object is the last STRUCTURE+EMPTY object, which has this and the turret mesh as sub objects/
+!1
++EMPTY
+!0|0.6|0|0|0|0
+#->
+/Light cannon/
+/Weapons are added to the turret that was last defined and are controlled by it/
+/The maximum range part can be left out in which case it is assumed the weapon's range is only limited by physics/
+/Without a max range set the weapon can behave in an unexpected manner on low gravity and low atmosphere planets/
+/bullet speed|kinetic|explosive|vec1x|vec1y|vec1z|vec2x|vec2y|vec2z|reload|clip ammo|clip reload|max range (optional)/
+#WEAPON
+!1.5|10|30|0.12|0.12|0.3|0.12|0.12|0.3|1.5|1|0
++BOX
+!0.08|0.08|1.5|0.08|0.08|0|30|30|30|0.18|0|0|0|0|0
+#WEAPON
+!1.5|10|30|0.12|0.12|0.3|0.12|0.12|0.3|1.5|1|0
++BOX
+!0.08|0.08|1.5|0.08|0.08|0|30|30|30|-0.18|0|0|0|0|0
+/After the subobjects are done, the currently selected object must be returned back to where the next object should begin/
+/Each left arrow cancels the effect of one right arrow, so in this case two are needed/
+#<-
+#<-
+
+/Right arm/
+#STRUCTURE
++EMPTY
+!1.95|1.7|0|0|0|0
+#->
+#STRUCTURE
++BOX
+!0.5|0.5|0.5|0.5|0.5|0.5|30|30|30|0|0|0|1.45|0|0.3
+#->
+#STRUCTURE
++BOX
+!0.65|0.65|2.5|0.7|0.7|0.0|100|100|100|0.25|0|0.2|0|0|0
+#->
+#TURRET
+!-3.0|1.0|0.25|0.25
+!3
++BOX
+!0.5|0.5|0.5|0.5|0.5|0.5|30|30|30|0|0|2.5|-1.3|0|0
+#->
+/Heavy cannon/
+#WEAPON
+!3.0|30|300|0.2|0.2|0.5|0.3|0.3|0.5|2.0|1|0|1000
++BOX
+!0.5|0.5|3.0|0.65|0.65|0.0|95|95|95|0|0|0.2|0|0|0
+#STRUCTURE
++BOX
+!0.3|0.3|0.85|0.3|0.3|0.0|20|20|20|0|0|2.5|0|0|0
+#<-
+#<-
+#<-
+#<-
+/Left arm/
+#STRUCTURE
++EMPTY
+!-1.95|1.7|0|0|0|0
+#->
+#STRUCTURE
++BOX
+!0.5|0.5|0.5|0.5|0.5|0.5|30|30|30|0|0|0|1.45|0|-0.3
+#->
+#STRUCTURE
++BOX
+!0.65|0.65|2.5|0.7|0.7|0.0|100|100|100|-0.25|0|0.2|0|0|0
+#->
+#TURRET
+!-3.0|1.0|0.25|0.25
+!3
++BOX
+!0.5|0.5|0.5|0.5|0.5|0.5|30|30|30|0|0|2.5|-1.3|0|0
+#->
+/Rapid fire weapon/
+#WEAPON
+!4.0|6|0|0.2|0.2|0.2|0.15|0.15|0.2|0.03|40|10|600
++BOX
+!0.5|0.5|3.0|0.65|0.65|0.0|95|95|95|0|0|0.2|0|0|0
+#STRUCTURE
++BOX
+!0.1|0.1|0.85|0.1|0.1|0.0|20|20|20|0.15|0.15|2.5|0|0|0
+#STRUCTURE
++BOX
+!0.1|0.1|0.85|0.1|0.1|0.0|20|20|20|-0.15|0.15|2.5|0|0|0
+#STRUCTURE
++BOX
+!0.1|0.1|0.85|0.1|0.1|0.0|20|20|20|-0.15|-0.15|2.5|0|0|0
+#STRUCTURE
++BOX
+!0.1|0.1|0.85|0.1|0.1|0.0|20|20|20|0.15|-0.15|2.5|0|0|0
+
+/The order must always be the same: unit type # stats # hull # mass # type specific # blocks/

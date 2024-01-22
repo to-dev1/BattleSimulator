@@ -1,0 +1,16 @@
+#10|armored-car
+#10|combat-mech
+#15|battle-tank
+#3|artillery-mech
+#3|super-tank
+#2|superheavy-mech
+#1|commander
+
+VS
+
+#10|enemy-light-tank
+#20|enemy-heavy-tank
+#20|enemy-combat-mech
+#3|enemy-railgun-tank
+#2|enemy-superheavy-mech
+#1|enemy-commander
