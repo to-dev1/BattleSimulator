@@ -36,3 +36,6 @@ F - launch projectile from camera
 
 # Files
 Create your own units with simple text files! Follow the instructions in the superheavy-mech.txt file which can be found in the folder data/blueprints/faction 1. Define the battle scenario in the battle.txt and select the planet by its index in planet.txt. The different planets can be found in the source file PlanetDatabase.
+
+# Structure
+The entry point to the program is the WindowSystem object in the WindowSystem file. The simulation is updated by the SimulationControl class, which also handles user input.
