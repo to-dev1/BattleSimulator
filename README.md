@@ -35,7 +35,10 @@ Y - faster time scale
 F - launch projectile from camera
 
 # Files
-Create your own units with simple text files! Follow the instructions in the superheavy-mech.txt file which can be found in the folder data/blueprints/faction 1. Define the battle scenario in the battle.txt and select the planet by its index in planet.txt. The different planets can be found in the source file PlanetDatabase.
+You can create your own units with simple text files. Follow the instructions in the superheavy-mech.txt file which can be found in the folder data/blueprints/faction 1. Define the battle scenario in the battle.txt and select the planet by its index in planet.txt. The different planets can be found in the source file PlanetDatabase.
+
+# Building the project
+The build.sbt file is provided and has the correct scala and swing versions. Clone the project with git, open the project in for example intellij and try to start the program in the WindowSystem entry point. In error cases check the installed versions of scala and scala SDK and confirm that the swing library has been installed. The data folder which contains multiple default units is included in this repository. The program detects if data files are missing and prints information to console. If no units appear, check the console output and check if the data folder is correctly included in the project.
 
 # Structure
 The entry point to the program is the WindowSystem object in the WindowSystem file. The simulation is updated by the SimulationControl class, which also handles user input.
